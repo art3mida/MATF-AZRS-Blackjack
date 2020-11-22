@@ -48,6 +48,11 @@ typedef struct Deck{
     unsigned next_card;
 } deck;
 
+typedef struct Card{
+    enum card_type type;
+    char image_path[MAX_PATH_LEN];
+} card;
+
 deck new_deck(card* cards, unsigned* seed)
 {
     deck d;
@@ -141,6 +146,12 @@ void init_cards(card* cards, char* map_path)
 
     for(i=0; i<CARD_NUM; i++)
         check_card(cards[i]);
+}
+
+void hit(hand* h, deck* d)
+{
+    h->cards[h->size] = d->cards[d->next_card++];
+    h->size++;
 }
 
 int main(int argc, char** argv) {
