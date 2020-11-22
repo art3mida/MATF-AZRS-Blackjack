@@ -43,6 +43,22 @@ typedef struct Card{
     char image_path[MAX_PATH_LEN];
 } card;
 
+typedef struct Deck{
+    card* cards[DECK_SIZE];
+    unsigned next_card;
+} deck;
+
+deck new_deck(card* cards, unsigned* seed)
+{
+    deck d;
+    d.next_card = 0;
+    int i;
+    for(i=0; i<DECK_SIZE; i++)
+        d.cards[i] = &cards[i/4];
+    fisher_yates(&d, seed);
+    return d;
+}
+
 void check_card(card card)
 {
     FILE* input = fopen(card.image_path, "r");
